@@ -1,0 +1,67 @@
+/* ==========================================================
+   effects.css — animations and the flying letters.
+   ========================================================== */
+
+/* A letter flying from the chosen word back into its lantern */
+.flyer {
+  position: absolute;
+  z-index: 5;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  font-family: var(--font-game);
+  font-weight: 700;
+  color: var(--gold-hot);
+  text-shadow: 0 0 14px rgba(255, 217, 110, .9);
+}
+
+.wobble { animation: wobble .5s ease !important; }
+
+@keyframes wobble {
+  20% { translate: -7px 0; rotate: -6deg; }
+  40% { translate: 6px 0;  rotate: 5deg; }
+  60% { translate: -4px 0; rotate: -3deg; }
+  80% { translate: 2px 0;  rotate: 1deg; }
+}
+
+@keyframes rise {
+  to { opacity: 1; transform: none; }
+}
+
+/* Her turn: a warm rim that never goes fully dark, so it never looks like "watching" */
+@keyframes breathe {
+  0%, 100% { box-shadow: inset 0 0 0 3px var(--lantern), 0 0 12px 3px rgba(255,180,77,.3); }
+  50%      { box-shadow: inset 0 0 0 3px var(--gold), 0 0 28px 9px rgba(255,180,77,.55); }
+}
+
+@keyframes beckon {
+  0%, 100% { box-shadow: inset 0 0 0 2px var(--lantern), 0 0 14px 4px rgba(255,180,77,.4); }
+  50%      { box-shadow: inset 0 0 0 2px var(--gold), 0 0 46px 18px rgba(255,200,90,.85); }
+}
+
+@keyframes beckon-button {
+  0%, 100% { box-shadow: 0 0 22px 6px rgba(255,217,110,.4), 0 5px 0 #c8962e; }
+  50%      { box-shadow: 0 0 46px 16px rgba(255,217,110,.8), 0 5px 0 #c8962e; }
+}
+
+@keyframes mini-glow {
+  0%, 100% { box-shadow: 0 0 6px 1px rgba(255,180,77,.4); }
+  50%      { box-shadow: 0 0 18px 6px rgba(255,180,77,.8); }
+}
+
+/* A level lantern popping when its level is cleared */
+.mini.pop { animation: pop .9s ease; }
+@keyframes pop {
+  0%   { transform: scale(1); }
+  35%  { transform: scale(1.9); }
+  100% { transform: scale(1); }
+}
+
+/* Calmer motion for people who ask for it in their device settings */
+@media (prefers-reduced-motion: reduce) {
+  .lantern.ready .body,
+  .lantern.beckon .body,
+  .mini.current,
+  .choice.play-again.risen { animation-duration: 3.5s; }
+  .choice { animation-duration: .2s; }
+  .mini.pop { animation: none; }
+}

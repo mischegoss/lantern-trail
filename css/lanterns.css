@@ -1,0 +1,106 @@
+/* ==========================================================
+   lanterns.css — the lanterns, their letters, and their
+   states: shown, lit, ready (breathing), beckon (hint glow).
+
+   Two clear modes, so she always knows when to tap:
+   - Watching (default): lanterns hang smaller and still,
+     and taps are ignored.
+   - Her turn (#field.turn): lanterns swing forward to full
+     size, start breathing, and a two-note chime plays.
+   ========================================================== */
+
+.lantern {
+  position: absolute;
+  transform: translate(-50%, -50%) scale(.82);
+  width: clamp(50px, 13.5vw, 96px);
+  aspect-ratio: 3 / 4;
+  display: grid;
+  grid-template-rows: 11% 1fr 13%;
+  justify-items: center;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: default;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .5s ease, transform .55s cubic-bezier(.3, 1.5, .5, 1);
+}
+.lantern.shown { opacity: 1; }
+
+#field.turn .lantern {
+  transform: translate(-50%, -50%) scale(1);
+  cursor: pointer;
+  pointer-events: auto;
+}
+.lantern:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 6px;
+  border-radius: 20px;
+}
+
+.lantern .cap {
+  width: 52%;
+  height: 100%;
+  background: var(--unlit-edge);
+  border-radius: 6px 6px 2px 2px;
+}
+.lantern .tassel {
+  width: 4px;
+  height: 100%;
+  background: var(--unlit-edge);
+  border-radius: 2px;
+}
+.lantern .body {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  border-radius: 40% 40% 34% 34% / 30% 30% 26% 26%;
+  background:
+    linear-gradient(90deg, transparent 0 22%, rgba(0,0,0,.18) 22% 24%, transparent 24% 76%, rgba(0,0,0,.18) 76% 78%, transparent 78%),
+    var(--unlit);
+  box-shadow: inset 0 0 0 2px var(--unlit-edge);
+  transition: background .2s ease, box-shadow .2s ease;
+}
+
+/* Lit */
+.lantern.lit .body {
+  background:
+    linear-gradient(90deg, transparent 0 22%, rgba(120,40,0,.25) 22% 24%, transparent 24% 76%, rgba(120,40,0,.25) 76% 78%, transparent 78%),
+    radial-gradient(60% 55% at 50% 45%, #fff6dc 0%, var(--lantern) 55%, var(--lantern-deep) 100%);
+  box-shadow: 0 0 28px 10px rgba(255,180,77,.55), 0 0 80px 30px rgba(255,140,50,.25);
+}
+.lantern.lit .cap,
+.lantern.lit .tassel { background: var(--lantern-deep); }
+
+/* Waiting to be tapped, and the hint glow */
+.lantern.ready .body  { animation: breathe 2.2s ease-in-out infinite; }
+.lantern.beckon .body { animation: beckon 1.1s ease-in-out infinite; }
+
+/* ---------- Letters ---------- */
+.letter {
+  font-family: var(--font-game);
+  font-weight: 700;
+  font-size: clamp(28px, 8vw, 50px);
+  line-height: 1;
+  color: var(--paper);
+  text-shadow: 0 0 10px rgba(255, 200, 120, .5);
+  transition: opacity .35s ease, transform .35s ease;
+}
+.lantern.lit .letter {
+  color: var(--ink);
+  text-shadow: none;
+}
+.letter.gone {
+  opacity: 0;
+  transform: scale(.4);
+}
+.letter.blank {
+  width: .62em;
+  height: .9em;
+  border-bottom: 4px solid var(--gold);
+  color: transparent;
+  text-shadow: none;
+}
+.letter.ghost { opacity: .5; }

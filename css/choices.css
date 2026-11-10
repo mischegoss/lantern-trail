@@ -1,0 +1,64 @@
+/* ==========================================================
+   choices.css — the word buttons that rise from the bottom,
+   and the "Play again" button after level 10.
+   ========================================================== */
+
+#tray {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 40px);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 14px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  pointer-events: none;
+}
+#tray.on { pointer-events: auto; }
+
+.choice {
+  min-height: 64px;
+  padding: 10px 24px;
+  border: 0;
+  border-radius: 16px;
+  background: linear-gradient(180deg, #fffaf0 0%, var(--paper) 60%, #f3d3a2 100%);
+  box-shadow: 0 0 18px 4px rgba(255,180,77,.3), 0 4px 0 #c89a5e;
+  color: var(--ink);
+  font-family: var(--font-game);
+  font-weight: 700;
+  font-size: clamp(26px, 7vw, 34px);
+  letter-spacing: .06em;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(70px);
+  animation: rise .7s cubic-bezier(.2, .8, .3, 1.1) forwards;
+}
+.choice:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 4px;
+}
+
+/* After rising, hold still so other animations (wobble) can play */
+.choice.risen { opacity: 1; transform: none; animation: none; }
+.choice.risen.wobble { animation: wobble .5s ease; }
+
+/* A wrong word drifts away; the right word hides while its letters fly */
+.choice.fade {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .6s ease .3s;
+}
+.choice.picked { visibility: hidden; }
+
+/* Play again */
+.choice.play-again {
+  min-height: 76px;
+  padding: 14px 36px;
+  font-size: clamp(28px, 8vw, 38px);
+  letter-spacing: .02em;
+  background: linear-gradient(180deg, #fff 0%, var(--gold-hot) 45%, var(--gold) 100%);
+  box-shadow: 0 0 30px 8px rgba(255,217,110,.5), 0 5px 0 #c8962e;
+}
+.choice.play-again.risen { animation: beckon-button 1.6s ease-in-out infinite; }

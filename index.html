@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0a1230">
+  <title>Lantern Trail</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/lanterns.css">
+  <link rel="stylesheet" href="css/choices.css">
+  <link rel="stylesheet" href="css/effects.css">
+
+  <!-- Game -->
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <main id="app" aria-label="Lantern Trail">
+    <canvas id="sky" aria-hidden="true"></canvas>
+    <nav id="levels" aria-label="Levels"></nav>
+    <div id="field"></div>
+    <div id="tray"></div>
+    <button id="reset" type="button" hidden aria-label="Reset progress">↺</button>
+  </main>
+</body>
+</html>
